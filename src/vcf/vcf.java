@@ -187,4 +187,7 @@ public class vcf {
     public int getSNPnum(){
         return snpNum;
     }
+    public String[] getSample(){
+        return sample;
+    }
 }
