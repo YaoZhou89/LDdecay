@@ -95,7 +95,7 @@ public class vcfTools {
         for (int i = 0; i < ID.size() - 1;i++ ){
             for (int j = i+1; j < ID.size();j++){
                 int size = (pos[j]-pos[i])/100;
-                if(size > block){
+                if(size > block-1){
 //                    double c = cc.calCor(geno[i],geno[j]);
 //                    res[block][1] = c*c;
 //                    res[block][2]++;
@@ -106,7 +106,6 @@ public class vcfTools {
                    continue;
                 }
                 res[size][1]  += c*c;
-                
                 res[size][2]++;
             }
         }

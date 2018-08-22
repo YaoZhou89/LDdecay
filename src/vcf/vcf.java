@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 public class vcf {
     int snpNum = 0;
     Set chr = new HashSet();
+    String chrom ="";
     List<String> ID = new ArrayList();
     int sampleSize;
     String[] sample;
@@ -78,49 +79,52 @@ public class vcf {
             int i = 0;
             String pos = "";
             
-            if(lineOne != null){
+            if(this.lineOne != null){
                 i++;
-                snpNum++;
-                te = lineOne.split("\t");
+                this.snpNum++;
+                te = this.lineOne.split("\t");
                 pos = te[0]+"_"+te[1];
-                ID.add(pos);
+                this.ID.add(pos);
                 String[] ge = new String[sampleSize];
                 String[] information = new String[7];
                 for(int j = 0; j<7;j++){
                     information[j] = te[j+2];
                 }
-                info.put(pos,information);
-                for(int j = 0; j< sampleSize;j++){
+                this.info.put(pos,information);
+                for(int j = 0; j< this.sampleSize;j++){
                     ge[j] = te[j+9];
                 }
-                genotype.put(pos, ge);
+                this.genotype.put(pos, ge);
             }
-            while((temp = br.readLine())!=null){
+            while((temp = this.br.readLine())!=null){
                 te = temp.split("\t");
-                if(first) {
-                    first = false;
-                    chr.add(te[0])  ;
+                if(this.first) {
+                    this.first = false;
+                    this.chr.add(te[0]) ;
+                    this.chrom =te[0];
                 }
-                if(chr.add(te[0])){
-                    lineOne = temp;
+                if(this.chr.add(te[0])){
+                    this.chrom =te[0];
+                    this.lineOne = temp;
                     break;
                 }
+                this.chrom =te[0];
                 i++;
-                snpNum++;
+                this.snpNum++;
                 pos = te[0]+"_"+te[1];
-                ID.add(pos);
-                String[] ge = new String[sampleSize];
+                this.ID.add(pos);
+                String[] ge = new String[this.sampleSize];
                 String[] information = new String[7];
                 for(int j = 0; j<7;j++){
                     information[j] = te[j+2];
                 }
-                info.put(pos,information);
-                for(int j = 0; j< sampleSize;j++){
+                this.info.put(pos,information);
+                for(int j = 0; j< this.sampleSize;j++){
                     ge[j] = te[j+9];
                 }
-                genotype.put(pos, ge);
+                this.genotype.put(pos, ge);
             }
-            if(temp==null) end = true;
+            if(temp==null) this.end = true;
         } catch (IOException ex) {
             Logger.getLogger(vcf.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -128,8 +132,8 @@ public class vcf {
     
     public void initialVCFwrite(String outFile){
         try {
-            bw = IOUtils.getTextWriter(outFile);
-            bw.write(header.toString());
+            this.bw = IOUtils.getTextWriter(outFile);
+            this.bw.write(this.header.toString());
         } catch (IOException ex) {
             Logger.getLogger(vcf.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -154,8 +158,8 @@ public class vcf {
     }
     public void close(){
         try {
-            bw.flush();
-            bw.close();
+            this.bw.flush();
+            this.bw.close();
         } catch (IOException ex) {
             Logger.getLogger(vcf.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -170,24 +174,24 @@ public class vcf {
         return re.toString();
     }
     public boolean checkEnd(){
-        return end;
+        return this.end;
     }
-    public Set getChr(){
-        return chr;
+    public String getChr(){
+        return this.chrom;
     }
     public Map getGeno(){
-        return genotype;
+        return this.genotype;
     }
     public List getPos(){
-        return ID;
+        return this.ID;
     }
     public int getSampleSize(){
-        return sampleSize;
+        return this.sampleSize;
     }
     public int getSNPnum(){
-        return snpNum;
+        return this.snpNum;
     }
     public String[] getSample(){
-        return sample;
+        return this.sample;
     }
 }
