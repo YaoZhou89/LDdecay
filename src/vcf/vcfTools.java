@@ -21,9 +21,7 @@ public class vcfTools {
     }
     public double[][] calCor(List<String> ID, Map<String,String[]> genotype,int windowSize){
         int block = windowSize/100;
-        Correlation cc = new Correlation();
-        double[][] res =  new double[block+1][3];
-        
+        double[][] res =  new double[block][3];
         double[][] geno = new double[ID.size()][genotype.get(ID.get(1)).length];
         Integer[] pos = new Integer[ID.size()];
         for (int i = 0; i < ID.size() ;i++ ){

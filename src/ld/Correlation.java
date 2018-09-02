@@ -46,6 +46,7 @@ public class Correlation {
         double[][] c = omitNaN(a,b);
         if(c[1].length<2) return Double.NaN;
         cor = cc.correlation(getRow(c,0), getRow(c,1));
+//        cor = cc.correlation(c[0], c[1]);
         return(cor);
     }
     public double[] getRow(double[][] a,int i){
